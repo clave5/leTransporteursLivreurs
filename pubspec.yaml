@@ -1,0 +1,172 @@
+name: letransporteur_livreur
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^3.0.0
+  flutter_svg: ^0.22.0
+  reactive_forms: ^17.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/SVG/notif-read.svg
+    - assets/img/notif-read.png
+    - assets/img/first-login-livreur-ill.jpg
+    - assets/img/login-livreur-ill.jpg
+    - assets/img/client_avatar.jpg
+    
+    - assets/SVG/step-ramassage.svg
+    - assets/SVG/step-ramassage-colis.svg
+    - assets/SVG/step-livraison.svg
+    - assets/SVG/notif-unread.svg
+    - assets/SVG/no-commandes.svg
+    - assets/SVG/accueil-menu-stroke-icon.svg
+    - assets/SVG/activite-menu-stroke-icon.svg
+    - assets/SVG/arrow-right-icon-gray.svg
+    - assets/SVG/assistance-menu-stroke-icon.svg
+    - assets/SVG/back-button.svg
+    - assets/SVG/categorie-arrow-icon-primary.svg
+    - assets/SVG/commande-termine-step-active.svg
+    - assets/SVG/commande-termine-step-gray.svg
+    - assets/SVG/date-icon-gray.svg
+    - assets/SVG/deconnexion-icon-red.svg
+    - assets/SVG/default-avatar.svg
+    - assets/SVG/depart-icon-gray.svg
+    - assets/SVG/destination-icon-gray.svg
+    - assets/SVG/edit-icon-dark.svg
+    - assets/SVG/en-attente-step-active.svg
+    - assets/SVG/en-attente-step-gray.svg
+    - assets/SVG/encours-activite-icon-dark.svg
+    - assets/SVG/en-route-step-active.svg
+    - assets/SVG/en-route-step-gray.svg
+    - assets/SVG/historique-icon-dark.svg
+    - assets/SVG/icon-accueil-fill.svg
+    - assets/SVG/icon-activite-fill.svg
+    - assets/SVG/icon-assistance-fill.svg
+    - assets/SVG/icon-fleche-transparant.svg
+    - assets/SVG/icon-profil-fill.svg
+    - assets/SVG/infos-perso-icon-dark.svg
+    - assets/SVG/language-icon-gray.svg
+    - assets/SVG/livraison-encours-step-active.svg
+    - assets/SVG/livraison-encours-step-gray.svg
+    - assets/SVG/livraison-icon-dark.svg
+    - assets/SVG/livraison-icon-primary.svg
+    - assets/SVG/mail-icon-gray.svg
+    - assets/SVG/map-marker--icon-dark.svg
+    - assets/SVG/map-marker-outline-gray.svg
+    - assets/SVG/map-marker-outline-primary.svg
+    - assets/SVG/message-icon-dark.svg
+    - assets/SVG/mieux-notes-icon-gray.svg
+    - assets/SVG/mieux-notes-icon-primary.svg
+    - assets/SVG/mot-de-passe-icon-dark.svg
+    - assets/SVG/no-commandes.svg
+    - assets/SVG/notif-read.svg
+    - assets/SVG/notif-unread.svg
+    - assets/SVG/parametres-icon-dark.svg
+    - assets/SVG/parrainnage-icon-dark.svg
+    - assets/SVG/password-hide-icon-gray.svg
+    - assets/SVG/password-icon-gray.svg
+    - assets/SVG/password-show-icon-gray.svg
+    - assets/SVG/phone-icon-gray.svg
+    - assets/SVG/preparation-encours-step-active.svg
+    - assets/SVG/preparation-encours-step-gray.svg
+    - assets/SVG/prix-icon-gray.svg
+    - assets/SVG/prix-icon-primary.svg
+    - assets/SVG/profile-menu-stroke-icon.svg
+    - assets/SVG/ramassage-step-active.svg
+    - assets/SVG/ramassage-step-gray.svg
+    - assets/SVG/recap-item-icon-primary.svg
+    - assets/SVG/repas-icon-dark.svg
+    - assets/SVG/repas-icon-primary.svg
+    - assets/SVG/sexe-icon-gray.svg
+    - assets/SVG/star-empty-icon-primary.svg
+    - assets/SVG/star-full-icon-primary.svg
+    - assets/SVG/supprimer-compte-icon-red.svg
+    - assets/SVG/taxi-icon-dark.svg
+    - assets/SVG/taxi-icon-primary.svg
+    - assets/SVG/taxi-moto-icon-primary.svg
+    - assets/SVG/taxi-voiture-clim-icon-primary.svg
+    - assets/SVG/taxi-voiture-icon-primary.svg
+    - assets/SVG/temps-estimatif-icon-dark.svg
+    - assets/SVG/user-icon-gray.svg 
+    - assets/SVG/circle_check.svg 
+
+
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+     - family: Aller
+       fonts:
+         - asset: assets/fonts/Aller_Std_Rg.ttf
+         - asset: assets/fonts/Aller_Std_Lt.ttf
+           weight: 300
+         - asset: assets/fonts/Aller_Std.ttf
+           weight: 700
+         - asset: assets/fonts/Aller_Std_It.ttf
+           style: italic
+     - family: Aller Display
+       fonts:
+         - asset: assets/fonts/AllerDisplay_Std_Rg.ttf

@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:letransporteur_livreur/misc/colors.dart';
-import 'package:letransporteur_livreur/pages/accueil.dart';
-import 'package:letransporteur_livreur/pages/activites.dart';
-import 'package:letransporteur_livreur/pages/assistance.dart';
-import 'package:letransporteur_livreur/pages/profile.dart';
-import 'package:letransporteur_livreur/widgets/button/router_button.dart';
-import 'package:letransporteur_livreur/widgets/texts/small/small_bold_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/small/small_regular_text.dart';
+import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/pages/accueil.dart';
+import 'package:letransporteur_client/pages/activites/activites.dart';
+import 'package:letransporteur_client/pages/assistance/assistance.dart';
+import 'package:letransporteur_client/pages/profile/profile.dart';
+import 'package:letransporteur_client/widgets/button/router_button.dart';
+import 'package:letransporteur_client/widgets/texts/small/small_bold_text.dart';
+import 'package:letransporteur_client/widgets/texts/small/small_regular_text.dart';
 
 class LivreurProgressBarComponent extends StatefulWidget {
   int step;

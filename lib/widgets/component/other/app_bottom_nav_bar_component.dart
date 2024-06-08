@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:letransporteur_livreur/misc/colors.dart';
-import 'package:letransporteur_livreur/pages/accueil.dart';
-import 'package:letransporteur_livreur/pages/activites.dart';
-import 'package:letransporteur_livreur/pages/assistance.dart';
-import 'package:letransporteur_livreur/pages/profile.dart';
-import 'package:letransporteur_livreur/widgets/button/router_button.dart';
+import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/pages/accueil.dart';
+import 'package:letransporteur_client/pages/activites/activites.dart';
+import 'package:letransporteur_client/pages/assistance/assistance.dart';
+import 'package:letransporteur_client/pages/profile/profile.dart';
+import 'package:letransporteur_client/widgets/button/router_button.dart';
 
 enum BottomNavPage { accueil, activites, assistance, profile }
 

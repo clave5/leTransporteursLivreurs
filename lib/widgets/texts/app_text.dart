@@ -23,6 +23,7 @@ class AppText extends StatelessWidget {
       text,
       softWrap: true,
       textAlign: textAlign,
+      overflow: TextOverflow.fade,
       style: TextStyle(
           color: Color(int.parse(color.replaceAll('#', '0xFF'))),
           fontSize: fontSize,

@@ -1,22 +1,26 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_brace_in_string_interps
 
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:letransporteur_livreur/misc/colors.dart';
-import 'package:letransporteur_livreur/misc/utils.dart';
-import 'package:letransporteur_livreur/pages/accueil.dart';
-import 'package:letransporteur_livreur/pages/first_login.dart';
-import 'package:letransporteur_livreur/pages/notifications.dart';
-import 'package:letransporteur_livreur/widgets/button/router_button.dart';
-import 'package:letransporteur_livreur/widgets/component/other/app_bottom_nav_bar_component.dart';
-import 'package:letransporteur_livreur/widgets/texts/large/large_bold_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/large/large_titre_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/medium/medium_light_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/xsmall/xsmall_bold_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/xsmall/xsmall_light_text.dart';
+import 'package:intl/intl.dart';
+import 'package:letransporteur_client/api/api.dart';
+import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/misc/utils.dart';
+import 'package:letransporteur_client/pages/accueil.dart';
+import 'package:letransporteur_client/pages/first_login.dart';
+import 'package:letransporteur_client/pages/notifications.dart';
+import 'package:letransporteur_client/pages/auth/signup.dart';
+import 'package:letransporteur_client/widgets/button/app_button.dart';
+import 'package:letransporteur_client/widgets/button/router_button.dart';
+import 'package:letransporteur_client/widgets/component/other/app_bottom_nav_bar_component.dart';
+import 'package:letransporteur_client/widgets/texts/large/large_bold_text.dart';
+import 'package:letransporteur_client/widgets/texts/large/large_titre_text.dart';
+import 'package:letransporteur_client/widgets/texts/medium/medium_light_text.dart';
+import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_bold_text.dart';
+import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_light_text.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class Login extends StatefulWidget {
@@ -28,27 +32,51 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   FormGroup form = FormGroup({
-    'phone': FormControl<int>(validators: [
+    'telephone': FormControl<String>(validators: [
       Validators.required,
       Validators.number(allowNegatives: false)
-    ]),
-    'pass': FormControl<String>(validators: [
+    ], value: "56341685"),
+    'password': FormControl<String>(validators: [
       Validators.required,
-    ]),
+    ], value: "wwwwwwww"),
   });
 
   @override
   Widget build(BuildContext context) {
+    bool loading = false;
+    String _token = "";
+
+    void go_login() async {
+      setState(() {
+        loading = true;
+      });
+      Map<String, Object?> data = form.rawValue;
+      //send request
+      post_request(
+          "${API_BASE_URL}/auth/login", // API URL
+          _token,
+          data, // Query parameters (if any)
+          (response) {
+        // Success callback
+        setState(() {
+          loading = false;
+        });
+
+        Utils.set_token(response["data"]["token"]);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Accueil(token: Utils.TOKEN)),
+        );
+      }, (error) {
+        // Error callback
+        setState(() {
+          loading = false;
+        });
+        //print(error);
+      }, form, context);
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        title: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [],
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
           child: Container(
         padding: EdgeInsets.all(0),
@@ -57,9 +85,9 @@ class LoginState extends State<Login> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image(
-              image: AssetImage("assets/img/login-livreur-ill.jpg"),
+              image: AssetImage("assets/img/auth-ill.jpg"),
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.35,
               fit: BoxFit.cover,
             ),
             Container(
@@ -89,18 +117,18 @@ class LoginState extends State<Login> {
                       child: Column(
                         children: [
                           ReactiveTextField(
-                            formControlName: 'phone',
+                            formControlName: 'telephone',
                             keyboardType: TextInputType.phone,
                             decoration: Utils.get_default_input_decoration(
-                                'Numero de téléphone', Icons.phone),
+                                'Numero de téléphone', Icons.phone, null, null),
                             style: Utils.small_bold_text_style,
                           ),
                           SizedBox(height: 15),
                           ReactiveTextField(
-                            formControlName: 'pass',
+                            formControlName: 'password',
                             obscureText: true,
                             decoration: Utils.get_default_input_decoration(
-                                'Mot de passe', Icons.lock),
+                                'Mot de passe', Icons.lock, null, null),
                           ),
                           SizedBox(height: 5),
                           Row(
@@ -117,8 +145,10 @@ class LoginState extends State<Login> {
                             ],
                           ),
                           SizedBox(height: 20),
-                          RouterButton(
-                              destination: FirtsLogin(),
+                          AppButton(
+                              onPressed: () {
+                                go_login();
+                              },
                               background_color: AppColors.primary,
                               text: "Connexion",
                               text_weight: "bold"),
@@ -132,7 +162,7 @@ class LoginState extends State<Login> {
                               RouterButton(
                                   force_height: 20,
                                   padding: [0, 0, 0, 0],
-                                  destination: FirtsLogin(),
+                                  destination: Signup(),
                                   text_size: "xsmall",
                                   text_weight: "bold",
                                   text: "Créez-en un"),
@@ -152,4 +182,10 @@ class LoginState extends State<Login> {
   }
 
   void onPressed() {}
+
+  @override
+  void dispose() {
+    form.dispose();
+    super.dispose();
+  }
 }

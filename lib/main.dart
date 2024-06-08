@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:letransporteur_livreur/pages/accueil.dart';
-import 'package:letransporteur_livreur/pages/login.dart';
+import 'package:intl/intl.dart';
+import 'package:letransporteur_client/pages/accueil.dart';
+import 'package:letransporteur_client/pages/commande_livraison.dart';
+import 'package:letransporteur_client/pages/auth/login.dart';
+import 'package:letransporteur_client/widgets/map/map_picker_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'LeTransporteur',
         theme: ThemeData(
           // This is the theme of your application.
           //

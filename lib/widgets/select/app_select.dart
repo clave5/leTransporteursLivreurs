@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:letransporteur_livreur/misc/colors.dart';
-import 'package:letransporteur_livreur/widgets/texts/xsmall/xsmall_bold_text.dart';
+import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_bold_text.dart';
 
 class AppSelect<T> extends StatefulWidget {
   final List<T> options;

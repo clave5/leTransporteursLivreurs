@@ -5,20 +5,20 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:letransporteur_livreur/misc/colors.dart';
-import 'package:letransporteur_livreur/misc/utils.dart';
-import 'package:letransporteur_livreur/pages/accueil.dart';
-import 'package:letransporteur_livreur/pages/first_login.dart';
-import 'package:letransporteur_livreur/pages/login.dart';
-import 'package:letransporteur_livreur/pages/notifications.dart';
-import 'package:letransporteur_livreur/widgets/button/router_button.dart';
-import 'package:letransporteur_livreur/widgets/component/other/app_bottom_nav_bar_component.dart';
-import 'package:letransporteur_livreur/widgets/texts/large/large_bold_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/large/large_titre_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/medium/medium_light_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/small/small_bold_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/xsmall/xsmall_bold_text.dart';
-import 'package:letransporteur_livreur/widgets/texts/xsmall/xsmall_light_text.dart';
+import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/misc/utils.dart';
+import 'package:letransporteur_client/pages/accueil.dart';
+import 'package:letransporteur_client/pages/first_login.dart';
+import 'package:letransporteur_client/pages/auth/login.dart';
+import 'package:letransporteur_client/pages/notifications.dart';
+import 'package:letransporteur_client/widgets/button/router_button.dart';
+import 'package:letransporteur_client/widgets/component/other/app_bottom_nav_bar_component.dart';
+import 'package:letransporteur_client/widgets/texts/large/large_bold_text.dart';
+import 'package:letransporteur_client/widgets/texts/large/large_titre_text.dart';
+import 'package:letransporteur_client/widgets/texts/medium/medium_light_text.dart';
+import 'package:letransporteur_client/widgets/texts/small/small_bold_text.dart';
+import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_bold_text.dart';
+import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_light_text.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class FirtsLogin extends StatefulWidget {
@@ -95,21 +95,21 @@ class FirtsLoginState extends State<FirtsLogin> {
                             formControlName: 'new_pass',
                             obscureText: true,
                             decoration: Utils.get_default_input_decoration(
-                                'Nouveau mot de passe', Icons.lock),
+                                'Nouveau mot de passe', Icons.lock, null, null),
                           ),
                           SizedBox(height: 10),
                           ReactiveTextField(
                             formControlName: 'new_pass_confirm',
                             obscureText: true,
                             decoration: Utils.get_default_input_decoration(
-                                'Répéter mot de passe', Icons.lock),
+                                'Répéter mot de passe', Icons.lock, null, null),
                           ),
                           SizedBox(height: 20),
                           ReactiveDropdownField<String>(
                             formControlName: 'question',
                             isExpanded: true,
                             decoration: Utils.get_default_input_decoration(
-                                'Choisissez une question de sécurité', null),
+                                'Choisissez une question de sécurité', null, null, null),
                             hint: Text('Selectionnez'),
                             items: [
                               DropdownMenuItem(
@@ -142,7 +142,7 @@ class FirtsLoginState extends State<FirtsLogin> {
                             formControlName: 'reponse',
                             obscureText: true,
                             decoration: Utils.get_default_input_decoration(
-                                'Votre réponse', null),
+                                'Votre réponse', null, null, null),
                           ),
                           SizedBox(height: 20),
                           RouterButton(

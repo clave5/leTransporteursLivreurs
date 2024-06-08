@@ -1,6 +1,6 @@
 {
-    "name": "letransporteur_livreur",
-    "short_name": "letransporteur_livreur",
+    "name": "letransporteur_client",
+    "short_name": "letransporteur_client",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

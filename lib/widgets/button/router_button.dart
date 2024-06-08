@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:letransporteur_livreur/misc/colors.dart';
-import 'package:letransporteur_livreur/widgets/button/app_button.dart';
-import 'package:letransporteur_livreur/widgets/texts/small/small_bold_text.dart';
+import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/widgets/button/app_button.dart';
+import 'package:letransporteur_client/widgets/texts/small/small_bold_text.dart';
 
 class RouterButton extends StatefulWidget {
   Widget destination;
@@ -35,10 +35,22 @@ class RouterButton extends StatefulWidget {
 
   /// small | normal | large | "doublexdouble"
   String border_radius_size;
+
+  /// horizontal | vertical
+  String orientation;
+
+  /// [AppColors.dark, 2, BorderStyle.solid]
+  List border;
+
   TextAlign text_align;
   String svg_path;
   List<double> padding;
   String image_path;
+  bool? disabled = false;
+  bool? flex_reverse = false;
+  bool? conserve_svg_image_color = false;
+  bool? loading = true;
+  BorderRadius? border_radius_only;
 
   RouterButton({
     super.key,
@@ -58,10 +70,17 @@ class RouterButton extends StatefulWidget {
     this.svg_image_size = "normal",
     this.text_size = "normal",
     this.border_radius_size = "normal",
+    this.orientation = "horizontal",
     this.svg_path = "",
     this.padding = const [],
     this.force_height = 0,
     this.image_path = "",
+    this.border_radius_only,
+    this.border = const [],
+    this.disabled = false,
+    this.loading = false,
+    this.conserve_svg_image_color = false,
+    this.flex_reverse = false,
   });
 
   @override
@@ -82,6 +101,7 @@ class RouterButtonState extends State<RouterButton> {
       padding: widget.padding,
       text: widget.text,
       icon: widget.icon,
+      border: widget.border,
       ratio_constraint: widget.ratio_constraint,
       background_color: widget.background_color,
       foreground_color: widget.foreground_color,
@@ -91,14 +111,21 @@ class RouterButtonState extends State<RouterButton> {
       text_size: widget.text_size,
       border_radius_size: widget.border_radius_size,
       svg_path: widget.svg_path,
+      orientation: widget.orientation,
       image_path: widget.image_path,
+      disabled: widget.disabled,
+      flex_reverse: widget.flex_reverse,
+      conserve_svg_image_color: widget.conserve_svg_image_color,
+      border_radius_only: widget.border_radius_only,
     );
   }
 
   void onPressed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => widget.destination),
-    );
+    if (widget.loading == false && widget.disabled == false) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => widget.destination),
+      );
+    }
   }
 }

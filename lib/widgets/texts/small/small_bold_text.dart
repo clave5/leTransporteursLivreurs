@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:letransporteur_livreur/widgets/texts/app_text.dart';
+import 'package:letransporteur_client/widgets/texts/app_text.dart';
 
 class SmallBoldText extends StatelessWidget {
   final String text;

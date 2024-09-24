@@ -1,4 +1,7 @@
+// widgets/texts/app_text.dart
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppText extends StatelessWidget {
   final String text;
@@ -11,7 +14,7 @@ class AppText extends StatelessWidget {
       {super.key,
       required this.text,
       this.color = "#000000",
-      this.fontSize = 14,
+      required this.fontSize,
       this.fontFamily = "Aller",
       this.textAlign = TextAlign.start,
       this.weight = FontWeight.normal});

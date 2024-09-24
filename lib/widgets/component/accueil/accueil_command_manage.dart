@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// widgets/component/accueil/accueil_command_manage.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/accueil.dart';
@@ -39,7 +41,7 @@ class _AccueilComandManageComponentState
   @override
   Widget build(BuildContext context) {
     setStep(int step) {
-      setState(() {
+      if(mounted) setState(() {
         print('setting step ${step}');
         widget.step = step;
       });
@@ -132,7 +134,7 @@ class _AccueilComandManageComponentState
                         borderRadius: BorderRadius.circular(5),
                         color: AppColors.gray2),
                     width: double.infinity,
-                    height: 50,
+                    height: 50.sp,
                     child: Padding(
                       padding: EdgeInsets.only(
                           top: 10, bottom: 10, left: 20, right: 20),
@@ -140,7 +142,7 @@ class _AccueilComandManageComponentState
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           MediumBoldText(
-                            text: "Livraison • 600 F CFA",
+                            text: "Livraison • 600 FCFA",
                             color: Utils.colorToHex(Colors.white),
                           ),
                           SizedBox(width: 10),
@@ -157,12 +159,12 @@ class _AccueilComandManageComponentState
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10.sp),
                   Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: ClientComponent()),
-                  SizedBox(height: 15),
+                  SizedBox(height: 15.sp),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: InfoBoxComponent(
@@ -174,7 +176,7 @@ class _AccueilComandManageComponentState
                           "text": "ITINÉRAIRE →",
                         }),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 15.sp),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: InfoBoxComponent(
@@ -186,7 +188,7 @@ class _AccueilComandManageComponentState
                           "text": "APPELER",
                         }),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 15.sp),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: livreurProgressBarComponent,

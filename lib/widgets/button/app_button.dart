@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+// widgets/button/app_button.dart
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
@@ -139,8 +141,8 @@ class AppButtonState extends State<AppButton> {
     if (widget.with_text) {
       button_children.add(Padding(
         padding: widget.flex_reverse == true
-            ? EdgeInsets.only(right: 5)
-            : EdgeInsets.only(left: 5),
+            ? EdgeInsets.only(right: 5.sp)
+            : EdgeInsets.only(left: 5.sp),
         child: get_text_child(),
       ));
     }
@@ -155,7 +157,8 @@ class AppButtonState extends State<AppButton> {
             .merge(widget.disabled == false ? default_style : disabled_style),
         child: Padding(
           padding: widget.padding.isEmpty
-              ? EdgeInsets.only(top: 10, bottom: 10, left: 25, right: 25)
+              ? EdgeInsets.only(
+                  top: 10.sp, bottom: 10.sp, left: 25.sp, right: 25.sp)
               : EdgeInsets.only(
                   top: widget.padding[0],
                   bottom: widget.padding[2],
@@ -194,7 +197,7 @@ class AppButtonState extends State<AppButton> {
     }
 
     return widget.force_height > 0
-        ? SizedBox(height: widget.force_height, child: button)
+        ? SizedBox(height: widget.force_height.sp, child: button)
         : button;
   }
 
@@ -208,9 +211,13 @@ class AppButtonState extends State<AppButton> {
       case "text":
         //alraeady text
         child = widget.loading == true
-            ? CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(AppColors.gray2),
-              )
+            ? Container(
+              width: 30.sp,
+              height: 30.sp,
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(AppColors.gray2),
+                ),
+            )
             : get_text_child();
         break;
       case "image":
@@ -232,8 +239,8 @@ class AppButtonState extends State<AppButton> {
       default:
     }
 
-    print([widget.svg_path, widget.foreground_color]);
-    print(get_image_dimensions(widget.svg_image_size));
+    //print([widget.svg_path, widget.foreground_color]);
+    //print(get_image_dimensions(widget.svg_image_size));
     return child;
   }
 
@@ -381,21 +388,21 @@ class AppButtonState extends State<AppButton> {
     if (size_str.contains("wx")) {
       double height = double.parse(size_str.split("wx")[1]);
       double width = height * ratio;
-      dimensions.addAll([width, height]);
+      dimensions.addAll([width.sp, height.sp]);
     } else if (size_str.contains("xh")) {
       double width = double.parse(size_str.split("xh")[0]);
       double height = width / ratio;
-      dimensions.addAll([width, height]);
+      dimensions.addAll([width.sp, height.sp]);
     } else {
       try {
         String width_str = size_str.split('x')[0];
         String height_str = size_str.split('x')[1];
         double width = double.parse(width_str);
         double height = double.parse(height_str);
-        dimensions.addAll([width, height]);
+        dimensions.addAll([width.sp, height.sp]);
       } catch (e) {
-        print(e);
-        dimensions = [20.0, 20.0];
+        //print(e);
+        dimensions = [20.0.sp, 20.0.sp];
       }
     }
 
@@ -403,15 +410,15 @@ class AppButtonState extends State<AppButton> {
   }
 
   double get_border_radius_size(size_str) {
-    double size = 5;
+    double size = 5.sp;
     switch (size_str) {
       case "small":
         break;
       case "normal":
-        size = 10;
+        size = 10.sp;
         break;
       case "large":
-        size = 20;
+        size = 20.sp;
         break;
       default:
         size = double.parse(size_str);
@@ -420,15 +427,15 @@ class AppButtonState extends State<AppButton> {
   }
 
   dynamic get_image_size(size_str) {
-    double size = 20;
+    double size = 20.sp;
     switch (size_str) {
       case "small":
         break;
       case "normal":
-        size = 30;
+        size = 30.sp;
         break;
       case "large":
-        size = 50;
+        size = 50.sp;
         break;
       default:
     }

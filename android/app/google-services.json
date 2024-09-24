@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "928727016278",
+    "project_id": "letransporteur-8937a",
+    "storage_bucket": "letransporteur-8937a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928727016278:android:29f38fb691f838f414acf7",
+        "android_client_info": {
+          "package_name": "com.example.letransporteur_client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_Da89WkOjleyO3FB3WA2VCDYPxXRC-Lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

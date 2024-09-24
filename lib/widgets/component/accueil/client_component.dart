@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// widgets/component/accueil/client_component.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/activites/activites.dart';
@@ -39,11 +41,12 @@ class _ClientComponentState extends State<ClientComponent> {
         children: [
           Container(
             width: 55,
-            height: 55,
+            height: 55.sp,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                  color: AppColors.primary, width: 1), // Set border color and width
+                  color: AppColors.primary,
+                  width: 1), // Set border color and width
             ),
             child: ClipOval(
               child: Image(image: AssetImage("assets/img/client_avatar.jpg")),
@@ -62,7 +65,7 @@ class _ClientComponentState extends State<ClientComponent> {
           ),
           Spacer(),
           RouterButton(
-            destination: Messagerie(),
+            destination: Messagerie(client_commande: {}),
             background_color: AppColors.primary,
             child_type: "svgimage",
             padding: [0, 5, 0, 5],

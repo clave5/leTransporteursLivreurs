@@ -1,5 +1,10 @@
-import 'package:flutter/cupertino.dart';
+// widgets/texts/large/large_bold_text.dart
+import 'package:flutter/cupertino.dart';import 'package:flutter/cupertino.dart';
 import 'package:letransporteur_client/widgets/texts/app_text.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class LargeBoldText extends StatelessWidget {
   final String text;
@@ -17,7 +22,7 @@ class LargeBoldText extends StatelessWidget {
         text: text,
         textAlign: textAlign,
         color: color,
-        fontSize: 24,
+        fontSize: 24.sp,
         weight: FontWeight.bold);
   }
 }

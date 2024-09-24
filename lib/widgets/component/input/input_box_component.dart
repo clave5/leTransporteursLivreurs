@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
+// widgets/component/input/input_box_component.dart
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/pages/accueil.dart';
 import 'package:letransporteur_client/pages/activites/activites.dart';
@@ -31,12 +33,12 @@ class _InputBoxComponentState extends State<InputBoxComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 5),
+            padding: EdgeInsets.only(left: 5.sp),
             child: SmallRegularText(
               text: widget.title,
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 5.sp),
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -45,7 +47,7 @@ class _InputBoxComponentState extends State<InputBoxComponent> {
                 )),
             child: Padding(
                 padding:
-                    EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 10),
+                    EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 10.sp),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

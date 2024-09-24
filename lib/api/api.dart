@@ -1,17 +1,22 @@
-/// OPENROUTESERVICE DIRECTION SERVICE REQUEST
+// api/api.dart
+/// OPENROUTESERVICE DIRECTION SERVICE REQUEST/// OPENROUTESERVICE DIRECTION SERVICE REQUEST
 /// Parameters are : startPoint, endPoint and api key
 
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/widgets/texts/small/small_bold_text.dart';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:reactive_forms/reactive_forms.dart';
 
-const String API_BASE_URL = "https://admin.letransporteur.co/api";
+const String BASE_URL = "https://admin.letransporteur.co";
+const String API_BASE_URL = "$BASE_URL/api";
+const String STORAGE_BASE_URL = "$BASE_URL/storage";
 const String OPEN_ROUTE_DIRECTION_BASE_URL =
     'https://api.openrouteservice.org/v2/directions/driving-car';
 const String OPEN_ROUTE_AUTOCOMPLETE_BASE_URL =
@@ -42,10 +47,10 @@ Future<void> post_request(
     String api_url,
     String token,
     Map<String, dynamic> data,
-    Function(Map<String, dynamic>) on_success,
+    Function(dynamic) on_success,
     Function(dynamic) on_error,
     FormGroup? form_to_handle,
-    BuildContext context) async {
+    BuildContext? context) async {
   final url = Uri.parse(api_url); // Replace with your URL
 
   try {
@@ -56,12 +61,13 @@ Future<void> post_request(
     });
     request.headers.addAll({"Authorization": "Bearer $token"});
 
-    Utils.log([url, data]);
+    Utils.log([url, token, data]);
 
     final response = await http.Response.fromStream(await request.send());
+    //log(response.body);
     dynamic response_body = json.decode(response.body);
     // Read the response body
-    if (response_body["status"] == true) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       // Handle successful response
       Utils.log(json.decode(response.body));
       on_success(json.decode(response.body));
@@ -70,16 +76,33 @@ Future<void> post_request(
 
       Utils.log_error("${response.statusCode} ${response.reasonPhrase}");
       Utils.log_error(response_body);
+      showToastWidget(
+          Container(
+            width: double.infinity,
+            color: Colors.red,
+            padding: EdgeInsets.all(10),
+            child: SmallBoldText(
+              text: response_body["message"],
+              color: Utils.colorToHex(Colors.white),
+            ),
+          ),
+          duration: Duration(seconds: 3),
+          context: context);
       on_error({"field_validation": true, "response_body": response_body});
 
       if (form_to_handle != null) {
         response_body["errors"].forEach((key, value) {
-          if (form_to_handle.controls[key] != null) {
+          if (response_body["errors"][key] is String) {
             form_to_handle.controls[key]
-                ?.setErrors({"field_validation": (value as List)[0]});
-            Utils.log(form_to_handle.controls[key]?.errors);
+                ?.setErrors({"field_validation": response_body["errors"][key]});
           } else {
-            launch_dialog(context, key + " : " + (value as List)[0]);
+            if (form_to_handle.controls[key] != null) {
+              form_to_handle.controls[key]
+                  ?.setErrors({"field_validation": (value as List)[0]});
+              Utils.log(form_to_handle.controls[key]?.errors);
+            } else {
+              launch_dialog(context!, key + " : " + (value as List)[0], null);
+            }
           }
         });
         form_to_handle.markAllAsTouched();
@@ -87,17 +110,18 @@ Future<void> post_request(
     } else {
       Utils.log_error(json.decode(response.body));
       on_error(response_body["message"]);
-      launch_dialog(context, response_body["message"]);
+      launch_dialog(context!, response_body["message"], null);
     }
-  } catch (e) {
+  } catch (e, stack) {
     // Handle any exceptions
     on_error(e.toString());
-    Utils.log_error(e.toString());
+    Utils.log_obj_error(
+        {"api_url": api_url, "data": data, "error": e.toString()}, stack);
     //rethrow;
   }
 }
 
-launch_dialog(BuildContext context, String text) {
+launch_dialog(BuildContext context, String text, dynamic dialog_actions) {
   showDialog(
       context: context,
       builder: (context) {
@@ -105,12 +129,22 @@ launch_dialog(BuildContext context, String text) {
           title: const Text(""),
           content: SmallBoldText(text: text),
           actions: <Widget>[
-            TextButton(
-              child: const Text('Ok, compris'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+            if (dialog_actions == null)
+              TextButton(
+                child: const Text('Ok, compris'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            else
+              ...dialog_actions.map<Widget>((action) {
+                return TextButton(
+                  child: action["text"],
+                  onPressed: () {
+                    action["action"];
+                  },
+                );
+              }).toList()
           ],
         );
       });
@@ -129,24 +163,26 @@ Future<void> get_request(
   };
 
   Uri uri = Uri.parse(apiUrl);
-  uri = uri.replace(queryParameters: queryParams);
+  if (queryParams != {}) {
+    uri = uri.replace(queryParameters: queryParams);
+  }
 
-  Utils.log(uri);
+  Utils.log([uri, token]);
 
   try {
     final response = await http.get(uri, headers: headers);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       // Handle successful response
       Utils.log(json.decode(response.body));
       on_success(json.decode(response.body));
     } else {
       // Handle error response
-      Utils.log_error('Error: ${response.reasonPhrase}');
+      Utils.log_error({'Error: ${response.reasonPhrase}', uri});
       on_error('Error: ${response.reasonPhrase}');
     }
-  } catch (e) {
+  } catch (e, stack) {
     // Handle any exceptions
     on_error('Error: ${e.toString()}');
-    Utils.log_error(e);
+    Utils.log_obj_error({"error": e.toString()}, stack);
   }
 }

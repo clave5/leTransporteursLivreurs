@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// widgets/component/notification/notification_component.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/activites/activites.dart';
@@ -22,7 +24,8 @@ import 'package:letransporteur_client/widgets/texts/small/small_titre_text.dart'
 import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_bold_text.dart';
 
 class NotificationComponent extends StatefulWidget {
-  const NotificationComponent({super.key});
+  var notification = {};
+  NotificationComponent({super.key, required this.notification});
 
   @override
   State<NotificationComponent> createState() => _NotificationComponentState();
@@ -43,33 +46,31 @@ class _NotificationComponentState extends State<NotificationComponent> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset(
+            /* SvgPicture.asset(
               "assets/SVG/notif-repas-icon.svg", // Path to your SVG asset
-              width: 30,
-              height: 30,
+              width: 30.sp,
+              height: 30.sp,
               fit: BoxFit.contain,
             ),
             SizedBox(
-              width: 10,
-            ),
+              width: 10.sp,
+            ), */
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  XSmallBoldText(text: "Repas • Livraison en cours"),
+                  XSmallBoldText(text: widget.notification["titre"]),
                   SizedBox(
-                    height: 5,
+                    height: 5.sp,
                   ),
-                  SmallRegularText(
-                      text:
-                          "Votre commande de 1x Assiete Burger + 2x Cannette Sprite est en cours de livraison. Appuyez pour les détails.")
+                  SmallRegularText(text: widget.notification["description"])
                 ],
               ),
             ),
             SizedBox(
-              width: 10,
+              width: 10.sp,
             ),
-            SmallLightText(text: "15m")
+            SmallLightText(text: Utils.ta(widget.notification["created_at"]))
           ],
         ),
       ),

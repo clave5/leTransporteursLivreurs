@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
+// widgets/component/other/app_bottom_nav_bar_component.dart
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/pages/accueil.dart';
 import 'package:letransporteur_client/pages/activites/activites.dart';
@@ -8,14 +10,15 @@ import 'package:letransporteur_client/pages/assistance/assistance.dart';
 import 'package:letransporteur_client/pages/profile/profile.dart';
 import 'package:letransporteur_client/widgets/button/router_button.dart';
 
-enum BottomNavPage { accueil, activites, assistance, profile }
+enum BottomNavPage { accueil, activites, assistance, profile, none }
 
 class AppBottomNavBarComponent extends StatefulWidget {
   BottomNavPage active;
   AppBottomNavBarComponent({super.key, required this.active});
 
   @override
-  State<AppBottomNavBarComponent> createState() => _AppBottomNavBarComponentState();
+  State<AppBottomNavBarComponent> createState() =>
+      _AppBottomNavBarComponentState();
 }
 
 class _AppBottomNavBarComponentState extends State<AppBottomNavBarComponent> {
@@ -24,7 +27,8 @@ class _AppBottomNavBarComponentState extends State<AppBottomNavBarComponent> {
     return Container(
         color: Colors.white,
         child: Padding(
-            padding: EdgeInsets.only(bottom: 10, top: 10, left: 15, right: 15),
+            padding: EdgeInsets.only(
+                bottom: 10.sp, top: 10.sp, left: 15.sp, right: 15.sp),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -82,29 +86,32 @@ class _AppBottomNavBarComponentState extends State<AppBottomNavBarComponent> {
 
   RouterButton get_initial_router_button(Widget destination, String svg_path) {
     RouterButton button = RouterButton(
-      destination: destination,
-      child_type: "svgimage",
-      svg_image_size: "wx25",
-      svg_path: svg_path,
-      padding: [12, 20, 12, 20],
-      foreground_color: AppColors.dark,
-      background_color: Colors.transparent,
-    );
+        destination: destination,
+        child_type: "svgimage",
+        svg_image_size: "wx25",
+        svg_path: svg_path,
+        padding: [0, 20.sp, 0, 20.sp],
+        force_height: 65.sp,
+        foreground_color: AppColors.dark,
+        background_color: Colors.transparent,
+        no_back_button: true);
     return button;
   }
 
   void set_active_router_button_props(
       RouterButton button, String svg_path, String text) {
-    setState(() {
-      button.svg_path = svg_path;
-      button.text = text;
-      button.foreground_color = Colors.white;
-      button.with_text = true;
-      button.text_size = "small";
-      button.text_weight = "bold";
-      button.svg_image_size = "wx18";
-      button.border_radius_size = "100";
-      button.background_color = AppColors.dark;
-    });
+    if (mounted) {
+      setState(() {
+        button.svg_path = svg_path;
+        button.text = text;
+        button.foreground_color = Colors.white;
+        button.with_text = true;
+        button.text_size = "small";
+        button.text_weight = "bold";
+        button.svg_image_size = "wx18";
+        button.border_radius_size = "100";
+        button.background_color = AppColors.dark;
+      });
+    }
   }
 }

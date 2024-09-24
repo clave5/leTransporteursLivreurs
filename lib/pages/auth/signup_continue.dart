@@ -1,16 +1,17 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, prefer_interpolation_to_compose_strings
+// pages/auth/signup_continue.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, prefer_interpolation_to_compose_strings// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, prefer_interpolation_to_compose_strings
 
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/api/api.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/accueil.dart';
 import 'package:letransporteur_client/pages/auth/signup.dart';
-import 'package:letransporteur_client/pages/first_login.dart';
 import 'package:letransporteur_client/pages/auth/login.dart';
 import 'package:letransporteur_client/pages/notifications.dart';
 import 'package:letransporteur_client/widgets/button/app_button.dart';
@@ -26,6 +27,7 @@ import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_bold_text.dart
 import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_light_text.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:intl/intl.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 Map<String, dynamic> customValidator(AbstractControl<dynamic> control) {
   return {"field_validation": control.errors["field_validation"] != null};
@@ -60,7 +62,7 @@ class SignupContinueState extends State<SignupContinue> {
     ]),
     'have_parrain': FormControl<bool>(validators: [], value: false),
     'codeParrain': FormControl<String>(validators: []),
-    'telephone': FormControl<int>(validators: [
+    'telephone': FormControl<String>(validators: [
       Validators.required,
       Validators.number(allowNegatives: false)
     ]),
@@ -78,10 +80,14 @@ class SignupContinueState extends State<SignupContinue> {
     ]),
   });
 
+  late Future<void> inscription_post = Future<void>(() {});
+
+  late Future<void> question_securite_get = Future<void>(() {});
+
   // Method to load the shared preference data
   void _load_preferences() async {
     /* final prefs = await SharedPreferences.getInstance();
-    setState(() {
+    if(mounted) setState(() {
       _token = prefs.getString('token') ?? '';
     }); */
   }
@@ -103,33 +109,39 @@ class SignupContinueState extends State<SignupContinue> {
             questions_loading == true || form.valid == false,
         "form": element
       });
-      setState(() {});
+      if (mounted) setState(() {});
     });
     // load form values from signup
     form.patchValue(widget.data);
 
     //get the question securite
-    setState(() {
-      questions_loading = true;
-    });
-    get_request(
+    if (mounted) {
+      setState(() {
+        questions_loading = true;
+      });
+    }
+    question_securite_get = get_request(
       "${API_BASE_URL}/question/securite", // API URL
       _token,
       {}, // Query parameters (if any)
       (response) {
-        setState(() {
-          question_securites = response["question_securite"];
-          questions_loading = false;
-        });
+        if (mounted) {
+          setState(() {
+            question_securites = response["question_securite"];
+            questions_loading = false;
+          });
+        }
       },
       (error) {},
     );
   }
 
   void go_signup() {
-    setState(() {
-      loading = true;
-    });
+    if (mounted) {
+      setState(() {
+        loading = true;
+      });
+    }
     Map<String, Object?> data = {};
     String dateNaissance = DateFormat('yyyy-MM-dd')
         .format(form.controls["dateNaissance"]?.value as DateTime);
@@ -150,40 +162,34 @@ class SignupContinueState extends State<SignupContinue> {
     });
     data["dateNaissance"] = dateNaissance;
     //send request
-    post_request(
+    inscription_post = post_request(
         "${API_BASE_URL}/auth/inscription", // API URL
         _token,
         data, // Query parameters (if any)
         (response) {
       // Success callback
-      setState(() {
-        loading = false;
-      });
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Icon(Icons.check_circle, color: Colors.green[800], size: 20,),
-              content: SmallLightText(text: response["message"]),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Continuer →'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Accueil()),
-                    );
-                  },
-                ),
-              ],
-            );
-          });
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+        Utils.set_token(response["data"]?["token"]);
+      }
+      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Accueil(
+                  token: Utils.TOKEN,
+                )),
+        (Route<dynamic> route) => false,
+      );
     }, (error) {
-      // Error callback
-      setState(() {
-        loading = false;
-      });
+      Utils.show_toast(context, error); // Error callback
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
       //print(error);
       if (error is String) {
       } else if (error is Map && error["field_validation"] == true) {
@@ -230,7 +236,8 @@ class SignupContinueState extends State<SignupContinue> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 40.sp, vertical: 40.sp),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -238,12 +245,12 @@ class SignupContinueState extends State<SignupContinue> {
                       text: "Finalisez votre inscription",
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 10.sp),
                     MediumLightText(
                         text:
                             "Entrez votre mot de passe et répondez à une question de sécurité.",
                         textAlign: TextAlign.center),
-                    SizedBox(height: 35),
+                    SizedBox(height: 35.sp),
                     ReactiveForm(
                       formGroup: form,
                       child: Column(
@@ -256,10 +263,17 @@ class SignupContinueState extends State<SignupContinue> {
                                   'Le mot de passe est requis',
                               'field_validation': (error) => error as String,
                             },
-                            decoration: Utils.get_default_input_decoration(
-                                'Mot de passe', Icons.lock, null, null),
+                            decoration:
+                                Utils.get_default_input_decoration_normal(
+                                    form.control('password'),
+                                    false,
+                                    'Mot de passe',
+                                    {"icon": Icons.lock, "size": 24.sp},
+                                    null,
+                                    null),
+                            style: Utils.small_bold_text_style,
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.sp),
                           ReactiveTextField(
                             formControlName: 'password_confirmation',
                             obscureText: true,
@@ -268,14 +282,28 @@ class SignupContinueState extends State<SignupContinue> {
                                   'Le mot de passe est requis',
                               'field_validation': (error) => error as String,
                             },
-                            decoration: Utils.get_default_input_decoration(
-                                'Répétez mot de passe', Icons.lock, null, null),
+                            decoration:
+                                Utils.get_default_input_decoration_normal(
+                                    form.control('password_confirmation'),
+                                    false,
+                                    'Répétez mot de passe',
+                                    {"icon": Icons.lock, "size": 24.sp},
+                                    null,
+                                    null),
+                            style: Utils.small_bold_text_style,
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.sp),
                           ReactiveDropdownField<int>(
                             isExpanded: true,
-                            decoration: Utils.get_default_input_decoration(
-                                'Question de sécurité', Icons.face, null, null),
+                            decoration:
+                                Utils.get_default_input_decoration_normal(
+                                    form.control('question_securite'),
+                                    true,
+                                    'Question de sécurité',
+                                    {"icon": Icons.face, "size": 24.sp},
+                                    null,
+                                    null),
+                            style: Utils.small_bold_text_style,
                             formControlName: 'question_securite',
                             validationMessages: {
                               ValidationMessage.required: (error) =>
@@ -287,12 +315,22 @@ class SignupContinueState extends State<SignupContinue> {
                               ...question_securites.map((question) {
                                 return DropdownMenuItem(
                                   value: question["id"],
-                                  child: Text(question["libelle"]),
+                                  child: Row(
+                                    children: [
+                                      Text("👉🏻 "),
+                                      Flexible(
+                                        child: TextScroll(
+                                          question["libelle"],
+                                          
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 );
                               }),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.sp),
                           ReactiveTextField(
                             formControlName: 'reponse_securite',
                             validationMessages: {
@@ -300,17 +338,24 @@ class SignupContinueState extends State<SignupContinue> {
                                   'La réponse de sécurité est requise',
                               'field_validation': (error) => error as String,
                             },
-                            decoration: Utils.get_default_input_decoration(
-                                'Réponse', Icons.face, null, null),
+                            decoration:
+                                Utils.get_default_input_decoration_normal(
+                                    form.control('reponse_securite'),
+                                    false,
+                                    'Réponse',
+                                    {"icon": Icons.face, "size": 24.sp},
+                                    null,
+                                    null),
+                            style: Utils.small_bold_text_style,
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 20.sp),
                           ReactiveCheckboxListTile(
                             formControlName: 'have_parrain',
                             title: SmallBoldText(
                               text: "Utiliser un code de parrainage",
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.sp),
                           ReactiveValueListenableBuilder(
                               formControlName: "have_parrain",
                               builder: (context, control, child) {
@@ -322,15 +367,18 @@ class SignupContinueState extends State<SignupContinue> {
                                         'field_validation': (error) =>
                                             error as String,
                                       },
-                                      decoration:
-                                          Utils.get_default_input_decoration(
+                                      decoration: Utils
+                                          .get_default_input_decoration_normal(
+                                              form.control('codeParrain'),
+                                              false,
                                               'Code de parainnage',
                                               null,
                                               null,
                                               null),
+                                      style: Utils.small_bold_text_style,
                                     ));
                               }),
-                          SizedBox(height: 35),
+                          SizedBox(height: 35.sp),
                           AppButton(
                               disabled: questions_loading == true ||
                                   form.valid == false,
@@ -341,9 +389,9 @@ class SignupContinueState extends State<SignupContinue> {
                               background_color: AppColors.primary,
                               text: "Terminer",
                               text_weight: "bold"),
-                          SizedBox(height: 15),
+                          SizedBox(height: 15.sp),
                           RouterButton(
-                              force_height: 20,
+                              force_height: 40.sp,
                               padding: [0, 0, 0, 0],
                               destination: Signup(data: form.rawValue),
                               text_size: "small",
@@ -363,8 +411,11 @@ class SignupContinueState extends State<SignupContinue> {
   }
 
   void onPressed() {}
+
   @override
   void dispose() {
+    if (question_securite_get != null) question_securite_get.ignore();
+    if (inscription_post != null) inscription_post.ignore();
     form.dispose();
     super.dispose();
   }

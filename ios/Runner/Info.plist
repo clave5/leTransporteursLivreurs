@@ -47,3 +47,19 @@
 	<true/>
 </dict>
 </plist>
+
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+</dict>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Nous avons besoin de votre localisation pour vous afficher de meilleures adresses.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>Nous avons besoin de votre localisation pour vous afficher de meilleures adresses.</string>
+<key>NSCameraUsageDescription</key>
+<string>Nous avons besoin d'accéder à votre caméra pour prendre une photo.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Nous avons besoin d'accéder à votre répertoire pour choisir une photo.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Nous avons besoin d'accéder à votre microphone pour l'enrégistrement.</string>

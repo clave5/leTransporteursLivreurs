@@ -47,7 +47,22 @@ dependencies:
   intl: ^0.18.1
   group_button: ^5.3.4
   flutter_html: ^3.0.0-beta.2
-  
+  intl_phone_field: ^3.2.0
+  flutter_styled_toast: ^2.2.1
+  flutter_inappwebview: ^6.0.0
+  url_launcher: ^6.1.7
+  geocoding: ^2.0.4
+  geolocator: ^9.0.2
+  timeago: ^3.7.0
+  flutter_screenutil: ^5.9.0
+  firebase_core: ^3.3.0
+  firebase_messaging: ^15.0.4
+  hive: ^2.0.0
+  hive_flutter: ^1.0.0
+  image_picker: ^0.8.7+4
+  get: ^4.6.6
+  text_scroll: ^0.2.0
+
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +88,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+
     - assets/img/notif-read.png
     - assets/img/livraison-repas-bike.png
     - assets/img/categorie-diner-back.png
@@ -85,6 +101,7 @@ flutter:
     - assets/img/parrainage-back.png
     - assets/img/repas-image.png
     - assets/img/taxi-image.png
+    - assets/img/avatar.png
 
 
     - assets/img/first-login-livreur-ill.jpg
@@ -97,6 +114,8 @@ flutter:
     
     
     - assets/SVG/notif-read.svg
+    - assets/SVG/logo-lt-horizontal-dark.svg
+    - assets/SVG/repas-icon-black.svg
     - assets/SVG/notif-livraison-icon.svg
     - assets/SVG/notif-repas-icon.svg
     - assets/SVG/notif-taxi-icon.svg

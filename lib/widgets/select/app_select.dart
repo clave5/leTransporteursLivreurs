@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+// widgets/select/app_select.dart
+import 'package:flutter/material.dart';import 'package:flutter/material.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/widgets/texts/xsmall/xsmall_bold_text.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class AppSelect<T> extends StatefulWidget {
   final List<T> options;
@@ -24,7 +27,7 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
     return GestureDetector(
       onTap: _showOptions,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 6.sp),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.primary),
           borderRadius: BorderRadius.circular(8),
@@ -53,7 +56,7 @@ class _AppSelectState<T> extends State<AppSelect<T>> {
               title: Text(option.toString()),
               onTap: () {
                 widget.onChanged(option);
-                setState(() {
+                if(mounted) setState(() {
                   widget.selectedOption = option;
                 });
                 print("selected ${option.toString()}");

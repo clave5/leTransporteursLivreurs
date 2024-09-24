@@ -1,5 +1,8 @@
+// widgets/texts/small/small_bold_text.dart
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:letransporteur_client/widgets/texts/app_text.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SmallBoldText extends StatelessWidget {
   final String text;
@@ -17,6 +20,7 @@ class SmallBoldText extends StatelessWidget {
       text: text,
       textAlign: textAlign,
       color: color,
+      fontSize: 14.sp,
       weight: FontWeight.bold,
     );
   }

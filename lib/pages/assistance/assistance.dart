@@ -1,7 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// pages/assistance/assistance.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:letransporteur_client/api/api.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/accueil.dart';
@@ -30,12 +34,43 @@ class _AssistanceState extends State<Assistance> {
     'search': FormControl<String>(validators: []),
   });
 
+  var faqs = [];
+
+  late Future<void> faq_get = Future<void>(() {});
+
+  @override
+  void dispose() {
+    if (faq_get != null) faq_get.ignore();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    Utils.log(Utils.TOKEN);
+    faq_get = get_request(
+      "$API_BASE_URL/client/faq", // API URL
+      Utils.TOKEN,
+      {}, // Query parameters (if any)
+      (response) {
+        Utils.log(response);
+        if(mounted) setState(() {
+          response = response["questionFAQ"];
+          response.keys.forEach((key) {
+            Utils.log(response[key]);
+            faqs.add({"title": key, "questions": response[key]});
+          });
+        });
+      },
+      (error) {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(kToolbarHeight), // Adjust height as needed
+            Size.fromHeight(kToolbarHeight.sp), // Adjust height as needed
         child: Padding(
           padding: EdgeInsets.only(bottom: 0), // Add bottom padding
           child: AppBar(
@@ -72,19 +107,52 @@ class _AssistanceState extends State<Assistance> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             recherche(),
-            SizedBox(height: 15),
-            AssistanceSessionComponent(),
-            SizedBox(height: 15),
-            AssistanceSessionComponent(),
-            SizedBox(height: 15),
-            AssistanceSessionComponent(),
-            SizedBox(height: 15),
-            AssistanceSessionComponent(),
+            faqs.isEmpty
+                ? loading_component()
+                : Column(
+                    children: [
+                      ...faqs.map((faq) {
+                        return Column(
+                          children: [
+                            SizedBox(height: 15.sp),
+                            AssistanceSessionComponent(faq: faq),
+                          ],
+                        );
+                      })
+                    ],
+                  ),
           ],
         ),
       )),
       bottomNavigationBar:
           AppBottomNavBarComponent(active: BottomNavPage.assistance),
+    );
+  }
+
+  
+  loading_component() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 40.sp,
+          ),
+          SvgPicture.asset(
+            "assets/SVG/activite-menu-stroke-icon.svg",
+            height: 100,
+            width: 100,
+            fit: BoxFit.contain,
+            color: AppColors.gray5,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          SmallLightText(
+            text: "Chargement",
+            color: Utils.colorToHex(AppColors.gray3),
+          )
+        ],
+      ),
     );
   }
 
@@ -96,14 +164,16 @@ class _AssistanceState extends State<Assistance> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 15),
+            SizedBox(height: 15.sp),
             Container(
-              height: 50,
+              height: 50.sp,
               child: ReactiveTextField(
                 formControlName: 'search',
-                decoration: Utils.get_default_input_decoration(
+                decoration: Utils.get_default_input_decoration_normal(
+                    search_form.control('search'),
+                    false,
                     'Tapez un terme de recherche',
-                    Icons.search,
+                    {"icon": Icons.search, "size": 24.sp},
                     Colors.transparent,
                     AppColors.gray7),
               ),

@@ -1,10 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// widgets/component/assistance/faq_question_component.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/activites/activites.dart';
+import 'package:letransporteur_client/pages/assistance/assistance_article.dart';
 import 'package:letransporteur_client/pages/notifications.dart';
 import 'package:letransporteur_client/widgets/component/other/app_bottom_nav_bar_component.dart';
 import 'package:letransporteur_client/widgets/select/app_select.dart';
@@ -21,7 +24,8 @@ import 'package:letransporteur_client/widgets/texts/small/small_regular_text.dar
 import 'package:letransporteur_client/widgets/texts/small/small_titre_text.dart';
 
 class FaqQuestionComponent extends StatefulWidget {
-  const FaqQuestionComponent({super.key});
+  var question = {};
+  FaqQuestionComponent({super.key, required this.question});
 
   @override
   State<FaqQuestionComponent> createState() => _FaqQuestionComponentState();
@@ -31,7 +35,16 @@ class _FaqQuestionComponentState extends State<FaqQuestionComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AssistanceArticle(
+                title: widget.question["libelle"],
+                question: widget.question,
+              ),
+            ));
+      },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
@@ -41,14 +54,11 @@ class _FaqQuestionComponentState extends State<FaqQuestionComponent> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
-                child: SmallRegularText(
-                    text:
-                        "Comment et où je télécharge l’application pour m’inscrire ?")),
+            Flexible(child: SmallRegularText(text: widget.question["libelle"])),
             SizedBox(
-              width: 10,
+              width: 10.sp,
             ),
-            Icon(Icons.arrow_forward_ios, color: AppColors.gray4, size: 20)
+            Icon(Icons.arrow_forward_ios, color: AppColors.gray4, size: 20.sp,)
           ],
         ),
       ),

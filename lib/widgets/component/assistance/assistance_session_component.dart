@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// widgets/component/assistance/assistance_session_component.dart
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/misc/utils.dart';
 import 'package:letransporteur_client/pages/activites/activites.dart';
@@ -22,7 +24,8 @@ import 'package:letransporteur_client/widgets/texts/small/small_regular_text.dar
 import 'package:letransporteur_client/widgets/texts/small/small_titre_text.dart';
 
 class AssistanceSessionComponent extends StatefulWidget {
-  const AssistanceSessionComponent({super.key});
+  var faq;
+  AssistanceSessionComponent({super.key, required this.faq});
 
   @override
   State<AssistanceSessionComponent> createState() =>
@@ -38,15 +41,13 @@ class _AssistanceSessionComponentState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MediumBoldText(text: "Inscription / Connexion"),
+            MediumBoldText(text: widget.faq["title"]),
             SizedBox(
-              height: 15,
+              height: 15.sp,
             ),
-            FaqQuestionComponent(),
-            FaqQuestionComponent(),
-            FaqQuestionComponent(),
-            FaqQuestionComponent(),
-            FaqQuestionComponent(),
+            ...widget.faq["questions"].map((question){
+              return FaqQuestionComponent(question: question);
+            })
           ],
         ));
   }

@@ -1,8 +1,11 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+// widgets/button/router_button.dart
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:letransporteur_client/misc/colors.dart';
+import 'package:letransporteur_client/misc/utils.dart';
+import 'package:letransporteur_client/pages/accueil.dart';
 import 'package:letransporteur_client/widgets/button/app_button.dart';
 import 'package:letransporteur_client/widgets/texts/small/small_bold_text.dart';
 
@@ -39,7 +42,7 @@ class RouterButton extends StatefulWidget {
   /// horizontal | vertical
   String orientation;
 
-  /// [AppColors.dark, 2, BorderStyle.solid]
+  /// [AppColors.dark, 2.0, BorderStyle.solid]
   List border;
 
   TextAlign text_align;
@@ -51,6 +54,7 @@ class RouterButton extends StatefulWidget {
   bool? conserve_svg_image_color = false;
   bool? loading = true;
   BorderRadius? border_radius_only;
+  bool? no_back_button;
 
   RouterButton({
     super.key,
@@ -81,6 +85,7 @@ class RouterButton extends StatefulWidget {
     this.loading = false,
     this.conserve_svg_image_color = false,
     this.flex_reverse = false,
+    this.no_back_button,
   });
 
   @override
@@ -122,10 +127,19 @@ class RouterButtonState extends State<RouterButton> {
 
   void onPressed() {
     if (widget.loading == false && widget.disabled == false) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => widget.destination),
-      );
+      if (widget.no_back_button == true) {
+        Utils.log(widget.no_back_button);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => widget.destination),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => widget.destination),
+        );
+      }
     }
   }
 }

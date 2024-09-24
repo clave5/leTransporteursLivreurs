@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
+// widgets/component/other/livreur_progress_bar_component.dart
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:letransporteur_client/misc/colors.dart';
 import 'package:letransporteur_client/pages/accueil.dart';
@@ -72,8 +74,8 @@ class _LivreurProgressBarComponentState
     }
     return SvgPicture.asset(
       step_title_icon, // Path to your SVG asset
-      width: 15,
-      height: 15,
+      width: 15.sp,
+      height: 15.sp,
       color: AppColors.gray2,
     );
   }
@@ -103,7 +105,7 @@ class _LivreurProgressBarComponentState
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
+        if(mounted) setState(() {
           if (widget.step == 4) {
             widget.step = 1;
           } else {
@@ -119,9 +121,9 @@ class _LivreurProgressBarComponentState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-                padding: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.only(left: 5.sp),
                 child: get_step_title_widget()),
-            SizedBox(height: 5),
+            SizedBox(height: 5.sp),
             Stack(
               alignment: Alignment.centerLeft,
               children: [
@@ -137,8 +139,8 @@ class _LivreurProgressBarComponentState
                             color: Colors.white,
                           )),
                       child: SizedBox(
-                        height: 15,
-                        width: 30,
+                        height: 15.sp,
+                        width: 30.sp,
                       )),
                 ),
                 FractionallySizedBox(
@@ -153,8 +155,8 @@ class _LivreurProgressBarComponentState
                             color: Colors.white,
                           )),
                       child: SizedBox(
-                        height: 15,
-                        width: 30,
+                        height: 15.sp,
+                        width: 30.sp,
                       )),
                 ),
                 FractionallySizedBox(
@@ -169,8 +171,8 @@ class _LivreurProgressBarComponentState
                             color: Colors.white,
                           )),
                       child: SizedBox(
-                        height: 15,
-                        width: 30,
+                        height: 15.sp,
+                        width: 30.sp,
                       )),
                 ),
                 FractionallySizedBox(
@@ -185,8 +187,8 @@ class _LivreurProgressBarComponentState
                             color: Colors.white,
                           )),
                       child: SizedBox(
-                        height: 15,
-                        width: 30,
+                        height: 15.sp,
+                        width: 30.sp,
                       )),
                 ),
               ],
